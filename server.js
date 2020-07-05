@@ -1,7 +1,7 @@
 // 1. Require Express
 const express = require("express");
 const path = require("path");
-const fs = ("fs");
+const fs = require("fs");
 
 // 2. Create an instance of Express - app
 const app = express()
@@ -19,13 +19,13 @@ app.get("/notes", (req, res) => {
 });
 
 // API Routes -> JSON
-app.get("api/notes", (req, res) => {
+app.get("/api/notes", (req, res) => {
     fs.readFile("./02-Homework/Develop/db/db.json", "utf8", (err, data) => {
         if (err) {
             return res.send("An error occured reading you data");
         }
-        const arrayofNotes = JSON.parse(data);
-        res.json(arrayofNotes);
+        // const arrayofNotes = JSON.parse(data);
+        res.json(data);
     });
 });
 
