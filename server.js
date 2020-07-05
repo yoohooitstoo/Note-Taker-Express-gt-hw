@@ -32,7 +32,7 @@ app.get("/api/notes", (req, res) => {
   });
 });
 
-// Add a new note via a POST request
+// Add a new note via a POST request test with POSTMAN
 app.post("/api/notes", (req, res) => {
   fs.readFile("./02-Homework/Develop/db/db.json", "utf8", (err, data) => {
     if (err) {
@@ -40,6 +40,12 @@ app.post("/api/notes", (req, res) => {
     }
     const arrayofNotes = JSON.parse(data);
     arrayofNotes.push(req.body);
+    fs.writeFile("./02-Homework/Develop/db/db.json", "utf8", (err, data) => {
+        if (err) {
+            return res.send("An error occurred writing your data.")
+        }
+        res.json(arrayofNotes);
+    })
   });
 });
 
