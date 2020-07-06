@@ -2,7 +2,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const e = require("express");
+
 
 // 2. Create an instance of Express - app
 const app = express();
@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static("public"))
+app.use(express.static("./02-Homework/Develop/public"));
 
 // View Routes -> HTML
 app.get("/", (req, res) => {
@@ -43,7 +43,7 @@ app.post("/api/notes", (req, res) => {
     }
     const arrayofNotes = JSON.parse(data);
     arrayofNotes.push(req.body);
-    fs.writeFile("./02-Homework/Develop/db/db.json", "utf8", (err, data) => {
+    fs.writeFile("./02-Homework/Develop/db/db.json", JSON.stringify(arrayofNotes), "utf8", (err, data) => {
         if (err) {
             return res.send("An error occurred writing your data.")
         }
