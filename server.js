@@ -2,6 +2,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const e = require("express");
 
 // 2. Create an instance of Express - app
 const app = express();
@@ -11,6 +12,8 @@ const PORT = process.env.PORT || 3000;
 // add data-parsing boilerplate to read POST body.
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(express.static("public"))
 
 // View Routes -> HTML
 app.get("/", (req, res) => {
