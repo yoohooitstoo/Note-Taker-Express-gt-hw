@@ -23,8 +23,10 @@ This Note Taker is able to have the user input information and then save the not
 
 The following screenshot demonstrates the application functionality:
 
-![HomePage demo]()
-![Notes page demo]()
+![HomePage demo](./02-Homework/Develop/public/assets/pictures/homepage.png)
+
+
+![Notes page demo](./02-Homework/Develop/public/assets/pictures/notespage.png)
 
 ## Credits
 
