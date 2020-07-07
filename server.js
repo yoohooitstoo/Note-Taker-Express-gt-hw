@@ -59,7 +59,7 @@ app.delete("/api/notes/:id", (req, res) => {
 
     const arrayOfNotes = JSON.parse(data);
     // const objID = req.params.id;
-    const newNotes = arrayOfNotes.slice(req.params.id);
+    const newNotes = arrayOfNotes.filter((newNote) => newNote.id != req.params.id);
 
     // adds an id to each note
     // arrayOfNotes.map((obj, i) => (obj.id = ++i));
