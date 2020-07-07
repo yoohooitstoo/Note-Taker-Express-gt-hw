@@ -16,10 +16,6 @@ app.use(express.json());
 app.use(express.static("./02-Homework/Develop/public"));
 
 // View Routes -> HTML
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "./02-Homework/Develop/public/index.html"));
-});
-
 app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "./02-Homework/Develop/public/notes.html"));
 });
@@ -30,8 +26,8 @@ app.get("/api/notes", (req, res) => {
     if (err) {
       return res.send("An error occured reading you data");
     }
-    const arrayofNotes = JSON.parse(data);
-    res.json(arrayofNotes);
+    const arrayOfNotes = JSON.parse(data);
+    res.json(arrayOfNotes);
   });
 });
 
@@ -41,17 +37,45 @@ app.post("/api/notes", (req, res) => {
     if (err) {
       return res.send("An error occured reading you data");
     }
-    const arrayofNotes = JSON.parse(data);
-    arrayofNotes.push(req.body);
-    fs.writeFile("./02-Homework/Develop/db/db.json", JSON.stringify(arrayofNotes), "utf8", (err, data) => {
+    const arrayOfNotes = JSON.parse(data);
+    arrayOfNotes.push(req.body);
+
+    for(var i =0; i < arrayOfNotes.length; i++){
+      if(data === arrayOfNotes[i].routeName) {
+          return res.json(arrayOfNotes[i]);
+      }
+    };
+
+    fs.writeFile("./02-Homework/Develop/db/db.json", JSON.stringify(arrayOfNotes), "utf8", (err, data) => {
         if (err) {
             return res.send("An error occurred writing your data.")
         }
-        res.json(arrayofNotes);
+        res.json(arrayOfNotes);
     })
   });
 });
 
+// app.delete("/api/notes/:id", (req,res) => {
+
+// })
+
+// app.delete('/api/notes/:id', (req, res) => {
+//   const id = req.param("id");
+//       id.remove({
+//           _id: id 
+//       }, (err) => {
+//           if (err) {
+//               console.log(err)
+//           }
+//           else {
+//              return res.send("Removed");
+//           }
+//       });
+//   });
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./02-Homework/Develop/public/index.html"));
+});
 // 4. Listen on that port
 app.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`);
