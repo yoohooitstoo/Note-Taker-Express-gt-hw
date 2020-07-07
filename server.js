@@ -37,6 +37,7 @@ app.post("/api/notes", (req, res) => {
     if (err) {
       return res.send("An error occured reading you data");
     }
+    
     const arrayOfNotes = JSON.parse(data);
     arrayOfNotes.push(req.body);
     // adds an id to each note
@@ -58,11 +59,8 @@ app.delete("/api/notes/:id", (req, res) => {
     }
 
     const arrayOfNotes = JSON.parse(data);
-    // const objID = req.params.id;
+    // Remove the selection the user wants to remove
     const newNotes = arrayOfNotes.filter((newNote) => newNote.id != req.params.id);
-
-    // adds an id to each note
-    // arrayOfNotes.map((obj, i) => (obj.id = ++i));
 
     fs.writeFile("./02-Homework/Develop/db/db.json", JSON.stringify(newNotes), "utf8", (err, data) => {
         if (err) {
@@ -73,23 +71,8 @@ app.delete("/api/notes/:id", (req, res) => {
   });
 });
 
-// app.delete("/api/notes/:id", (req,res) => {
 
-// })
-
-// app.delete('/api/notes/:id', (req, res) => {
-//       id.remove({
-//           params.id
-//       }, (err) => {
-//           if (err) {
-//               console.log(err)
-//           }
-//           else {
-//              return res.send("Removed");
-//           }
-//       });
-//   });
-
+// View Route --> HTML
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./02-Homework/Develop/public/index.html"));
 });
