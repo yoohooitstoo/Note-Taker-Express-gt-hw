@@ -39,14 +39,32 @@ app.post("/api/notes", (req, res) => {
     }
     const arrayOfNotes = JSON.parse(data);
     arrayOfNotes.push(req.body);
-
-    for(var i =0; i < arrayOfNotes.length; i++){
-      if(data === arrayOfNotes[i].routeName) {
-          return res.json(arrayOfNotes[i]);
-      }
-    };
+    // adds an id to each note
+    arrayOfNotes.map((obj, i) => (obj.id = ++i));
 
     fs.writeFile("./02-Homework/Develop/db/db.json", JSON.stringify(arrayOfNotes), "utf8", (err, data) => {
+        if (err) {
+            return res.send("An error occurred writing your data.")
+        }
+        res.json(arrayOfNotes);
+    })
+  });
+});
+
+app.delete("/api/notes/:id", (req, res) => {
+  fs.readFile("./02-Homework/Develop/db/db.json", "utf8", (err, data) => {
+    if (err) {
+      return res.send("An error occured reading you data");
+    }
+
+    const arrayOfNotes = JSON.parse(data);
+    // const objID = req.params.id;
+    const newNotes = arrayOfNotes.slice(req.params.id);
+
+    // adds an id to each note
+    // arrayOfNotes.map((obj, i) => (obj.id = ++i));
+
+    fs.writeFile("./02-Homework/Develop/db/db.json", JSON.stringify(newNotes), "utf8", (err, data) => {
         if (err) {
             return res.send("An error occurred writing your data.")
         }
@@ -60,9 +78,8 @@ app.post("/api/notes", (req, res) => {
 // })
 
 // app.delete('/api/notes/:id', (req, res) => {
-//   const id = req.param("id");
 //       id.remove({
-//           _id: id 
+//           params.id
 //       }, (err) => {
 //           if (err) {
 //               console.log(err)
